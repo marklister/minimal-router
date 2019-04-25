@@ -1,12 +1,12 @@
 import java.util.{Observable, Observer}
 
-import minimal.router.{ObsRouter, Root}
 import monix.execution.Ack.Continue
 import monix.execution.{Ack, Scheduler}
 import monix.reactive.observers.Subscriber
 import outwatch.dom.dsl._
 import org.scalatest.Matchers
 import outwatch.dom.VNode
+import router.{ObsRouter, Root}
 
 import scala.concurrent.Future
 

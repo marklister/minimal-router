@@ -1,4 +1,4 @@
-package minimal.router
+package router
 
 object StringUtil {
 

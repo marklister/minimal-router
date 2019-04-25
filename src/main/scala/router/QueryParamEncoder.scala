@@ -1,4 +1,4 @@
-package minimal.router
+package router
 
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
