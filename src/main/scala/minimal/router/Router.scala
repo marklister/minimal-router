@@ -3,12 +3,11 @@ package minimal.router
 /* Stolen from Finagle*/
 
 import monix.execution.Cancelable
-import monix.execution.Scheduler.Implicits.global
 import monix.reactive.Observable
 import monix.reactive.observers.Subscriber
+import monix.execution.Scheduler.Implicits.global
 import org.scalajs.dom.raw.{HashChangeEvent, Window}
 import org.scalajs.dom.window
-import outwatch.dom.VNode
 
 import scala.concurrent.Future
 
@@ -39,9 +38,9 @@ class Router[P, U](renderFunc: P => U)(pageSelector: Path => P) {
   upd()
 }
 
-class ObsRouter(pageSelector: Path => Future[VNode])(implicit w: Window) extends Observable[VNode] {
+class ObsRouter[N](pageSelector: Path => Future[N])(implicit w: Window) extends Observable[N] {
 
-  var subscribers = Seq.empty[Subscriber[VNode]]
+  var subscribers = Seq.empty[Subscriber[N]]
 
   def redirect(s: String) = window.location.hash = s
 
@@ -49,10 +48,10 @@ class ObsRouter(pageSelector: Path => Future[VNode])(implicit w: Window) extends
 
   def forward() = window.history.forward()
 
-  override def unsafeSubscribeFn(subscriber: Subscriber[VNode]): Cancelable = {
+  override def unsafeSubscribeFn(subscriber: Subscriber[N]): Cancelable = {
     subscribers = subscribers :+ subscriber
     upd.map(p => subscriber.onNext(p))
-    () => subscribers = Seq.empty[Subscriber[VNode]]
+    () => subscribers = Seq.empty[Subscriber[N]]
   }
 
   private def upd() = {
@@ -70,5 +69,5 @@ class ObsRouter(pageSelector: Path => Future[VNode])(implicit w: Window) extends
 }
 
 object ObsRouter {
-  def apply(p: Path => Future[VNode])(implicit w: Window) = new ObsRouter(p)
+  def apply[N](p: Path => Future[N])(implicit w: Window) = new ObsRouter(p)
 }

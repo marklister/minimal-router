@@ -1,8 +1,8 @@
-enablePlugins(ScalaJSBundlerPlugin)
+enablePlugins(ScalaJSBundlerPlugin, ScalaJSPlugin)
 
 name := "minimal-router"
 
-version := "0.1-SNAPSHOT"
+version := "0.1.1-SNAPSHOT"
 
 scalaVersion := "2.12.8"
 
@@ -10,7 +10,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 
 libraryDependencies ++= Seq(
   "org.scala-js" %%% "scalajs-dom" % "0.9.6",
-  "com.github.outwatch" % "outwatch" % "master-SNAPSHOT",
+  "io.monix" %% "monix" % "3.0.0-RC1",
   "org.scalatest" %%% "scalatest" % "3.0.7" % Test)
 
 webpackConfigFile in fullOptJS := Some(baseDirectory.value / "prod.webpack.config.js")
